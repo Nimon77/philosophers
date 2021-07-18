@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:31 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/18 16:52:10 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/18 21:00:01 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ void	*philosopher(void *arg)
 		pthread_mutex_lock(&philo->m_eating);
 		print_message(philo, "is eating");
 		philo->last_eat = get_time();
+		philo->limit_eat = philo->last_eat + philo->status->timeToDie;
+		pthread_mutex_unlock(&philo->m_eating);
 		ft_usleep(philo->status, philo->status->timeToEat);
 		if (!philo->status->good)
 			return (NULL);
-		pthread_mutex_unlock(&philo->m_eating);
 		pthread_mutex_unlock(philo->r_fork);
 		pthread_mutex_unlock(philo->l_fork);
 		print_message(philo, "is sleeping");
@@ -44,9 +45,8 @@ void	*philosopher(void *arg)
 
 void	*monitor(void *arg)
 {
-	t_main	*status;
-	time_t	time;
-	int		i;
+	t_main		*status;
+	int			i;
 
 	status = (t_main *)arg;
 	while (1)
@@ -55,16 +55,19 @@ void	*monitor(void *arg)
 		while (++i < status->nbr_philo)
 		{
 			pthread_mutex_lock(&status->philos[i].m_eating);
-			time = get_time();
-			if ((int)(time - status->philos[i].last_eat) > status->timeToDie)
+			if (get_time() > status->philos[i].limit_eat)
 			{
+				pthread_mutex_lock(&status->m_good);
 				status->good = 0;
-				print_message(&status->philos[i], "is dead");
+				pthread_mutex_unlock(&status->m_good);
+				pthread_mutex_lock(&status->m_print);
+				printf("%lld %d is dead\n", get_time() - status->time, i + 1);
+				pthread_mutex_unlock(&status->m_print);
 				return (NULL);
 			}
 			pthread_mutex_unlock(&status->philos[i].m_eating);
 		}
-		ft_usleep(status, 100);
+		usleep(100);
 	}
 }
 

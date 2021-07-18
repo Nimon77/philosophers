@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:04 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/18 16:28:19 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/18 19:12:29 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_putnbr_fd(int n, int fd)
 		write(fd, &tmp[--i], 1);
 }
 
-time_t	get_time(void)
+long long	get_time(void)
 {
 	static struct timeval	time;
 
@@ -72,13 +72,9 @@ time_t	get_time(void)
 
 void	ft_usleep(t_main *status, int stop_ms)
 {
-	time_t	end_ms;
+	long long	end_ms;
 
 	end_ms = get_time() + stop_ms;
-	while (get_time() < end_ms)
-	{
-		if (!status->good)
-			return ;
+	while (get_time() < end_ms && status->good)
 		usleep(100);
-	}
 }

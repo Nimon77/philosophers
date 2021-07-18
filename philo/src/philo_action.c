@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 02:01:23 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/18 16:48:35 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/18 20:48:55 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 void	print_message(t_philo *philo, char *str)
 {
-	pthread_mutex_lock(&philo->status->m_print);
-	printf("%ld %d %s\n", get_time() - philo->status->time, philo->id + 1, str);
-	pthread_mutex_unlock(&philo->status->m_print);
+	if (philo->status->good)
+	{
+		pthread_mutex_lock(&philo->status->m_print);
+		printf("%lld %d %s\n", get_time() - philo->status->time,
+			philo->id + 1, str);
+		pthread_mutex_unlock(&philo->status->m_print);
+	}
 }
 
 void	find_forks(t_main *status, int id)
@@ -34,6 +38,8 @@ void	start_half(t_main *status, int i)
 	{
 		status->philos[i].status = status;
 		status->philos[i].id = i;
+		status->philos[i].last_eat = status->time;
+		status->philos[i].limit_eat = status->time + status->timeToDie;
 		find_forks(status, i);
 		pthread_mutex_init(&status->philos[i].m_eating, NULL);
 		pthread_create(&status->philos[i].thread, NULL, philosopher,
