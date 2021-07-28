@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:31 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/28 19:03:17 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/28 19:43:36 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	*philosopher(void *arg)
 		philo_eat(philo);
 		if (!philo->status->good)
 			return (NULL);
-		pthread_mutex_unlock(philo->r_fork);
-		pthread_mutex_unlock(philo->l_fork);
 		print_message(philo, "is sleeping");
 		ft_usleep(philo->status, philo->status->timeToSleep);
 		if (!philo->status->good)
