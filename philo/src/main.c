@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:31 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/28 19:00:02 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/28 19:03:17 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	create_philo(t_main *status)
 	int	i;
 
 	status->eat_count = 0;
-	status->time = get_time();
 	status->philos = malloc(sizeof(t_philo) * status->nbr_philo);
 	status->forks = malloc(sizeof(pthread_mutex_t) * status->nbr_philo);
 	pthread_mutex_init(&status->m_print, NULL);
@@ -50,6 +49,7 @@ int	create_philo(t_main *status)
 		pthread_mutex_init(&status->forks[i], NULL);
 	pthread_mutex_init(&status->m_good, NULL);
 	pthread_mutex_init(&status->m_eat_count, NULL);
+	status->time = get_time();
 	start_half(status, 0);
 	ft_usleep(status, 10);
 	start_half(status, 1);
