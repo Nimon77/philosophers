@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:31 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/28 18:46:13 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/28 18:50:55 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,9 @@ int	main(int argc, char const *argv[])
 		status.timeToDie = ft_atoi(argv[2]);
 		status.timeToEat = ft_atoi(argv[3]);
 		status.timeToSleep = ft_atoi(argv[4]);
+		status.nbrEat = -1;
 		if (argc == 6)
 			status.nbrEat = ft_atoi(argv[5]);
-		else
-			status.nbrEat = -1;
-		if (DEBUG)
-			printf("%d %d %d %d %d\n", status.nbr_philo, status.timeToDie,
-				status.timeToEat, status.timeToSleep, status.nbrEat);
 		if (check_inputs(&status))
 		{
 			write(0, "Error inputs\n", ft_strlen("Error inputs\n"));
@@ -100,6 +96,11 @@ int	main(int argc, char const *argv[])
 		}
 		status.good = 1;
 		create_philo(&status);
+	}
+	else
+	{
+		write(0, "Error inputs\n", ft_strlen("Error inputs\n"));
+		return (1);
 	}
 	return (0);
 }
