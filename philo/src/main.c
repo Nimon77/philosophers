@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:31 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/28 18:50:55 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/28 18:58:01 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int argc, char const *argv[])
 			status.nbrEat = ft_atoi(argv[5]);
 		if (check_inputs(&status))
 		{
-			write(0, "Error inputs\n", ft_strlen("Error inputs\n"));
+			write(STDERR_FILENO, "Error inputs\n", ft_strlen("Error inputs\n"));
 			return (1);
 		}
 		status.good = 1;
@@ -99,7 +99,7 @@ int	main(int argc, char const *argv[])
 	}
 	else
 	{
-		write(0, "Error inputs\n", ft_strlen("Error inputs\n"));
+		write(STDERR_FILENO, "Error inputs\n", ft_strlen("Error inputs\n"));
 		return (1);
 	}
 	return (0);
