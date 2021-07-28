@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:47 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/18 19:26:17 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/28 18:05:31 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,17 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+# ifndef DEBUG
+#  define DEBUG 0
+# endif
+
 typedef struct s_philo
 {
 	int				id;
 	pthread_t		thread;
 	long long		last_eat;
 	long long		limit_eat;
+	int				nbr_eat;
 	pthread_mutex_t	m_eating;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
@@ -37,7 +42,10 @@ typedef struct s_main
 	int				timeToDie;
 	int				timeToEat;
 	int				timeToSleep;
+	int				nbrEat;
 	int				good;
+	int				eat_count;
+	pthread_mutex_t	m_eat_count;
 	pthread_mutex_t	m_good;
 	long long		time;
 	t_philo			*philos;
@@ -61,5 +69,7 @@ void		start_half(t_main *status, int i);
 void		ft_usleep(t_main *status, int stop_ms);
 void		ft_putnbr_fd(int n, int fd);
 void		print_message(t_philo *philo, char *str);
+void		philo_eat(t_philo *philo);
+void		*monitor(void *arg);
 
 #endif

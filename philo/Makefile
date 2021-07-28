@@ -6,7 +6,7 @@
 #    By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/29 17:07:11 by nsimon            #+#    #+#              #
-#    Updated: 2021/07/03 02:04:46 by nsimon           ###   ########.fr        #
+#    Updated: 2021/07/28 18:05:03 by nsimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,15 +18,20 @@ SRC_PATH = ./src/
 
 SRC_NAME =	main.c \
 			utils.c \
-			philo_action.c
+			philo_action.c \
+			monitor.c
 
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 
 OBJ_PATH = ./objs/
 
+OBJ_PATH_DEBUG = ./objs_DEBUG/
+
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
+
+OBJ_DEBUG = $(addprefix $(OBJ_PATH_DEBUG), $(OBJ_NAME))
 
 CC = clang $(CFLAGS)
 
@@ -45,10 +50,21 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	@$(CC) -I$(INC_PATH) -o $@ -c $<
 
+debug: $(OBJ_DEBUG)
+	@echo "\033[34mCreation of $(NAME) ...\033[0m"
+	@$(CC) $(OBJ_DEBUG) -o$(NAME) -g
+	@echo "\033[32m$(NAME) created\n\033[0m"
+
+$(OBJ_PATH_DEBUG)%.o: $(SRC_PATH)%.c
+	@mkdir $(OBJ_PATH_DEBUG) 2> /dev/null || true
+	@$(CC) -DDEBUG=1 -I$(INC_PATH) -o $@ -c $<
+
 clean:
 	@echo "\033[33mRemoval of .o files of $(NAME) ...\033[0m"
 	@rm -f $(OBJ)
+	@rm -f $(OBJ_DEBUG)
 	@rmdir $(OBJ_PATH) 2> /dev/null || true
+	@rmdir $(OBJ_PATH_DEBUG) 2> /dev/null || true
 	@echo "\033[31mFiles .o deleted\n\033[0m"
 
 fclean: clean

@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 02:01:23 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/18 20:48:55 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/28 17:58:21 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	print_message(t_philo *philo, char *str)
 {
+	pthread_mutex_lock(&philo->status->m_print);
 	if (philo->status->good)
 	{
-		pthread_mutex_lock(&philo->status->m_print);
 		printf("%lld %d %s\n", get_time() - philo->status->time,
 			philo->id + 1, str);
-		pthread_mutex_unlock(&philo->status->m_print);
 	}
+	pthread_mutex_unlock(&philo->status->m_print);
 }
 
 void	find_forks(t_main *status, int id)
@@ -40,10 +40,29 @@ void	start_half(t_main *status, int i)
 		status->philos[i].id = i;
 		status->philos[i].last_eat = status->time;
 		status->philos[i].limit_eat = status->time + status->timeToDie;
+		status->philos[i].nbr_eat = 0;
 		find_forks(status, i);
 		pthread_mutex_init(&status->philos[i].m_eating, NULL);
 		pthread_create(&status->philos[i].thread, NULL, philosopher,
 			&status->philos[i]);
 		i += 2;
 	}
+}
+
+void	philo_eat(t_philo *philo)
+{
+	pthread_mutex_lock(philo->l_fork);
+	print_message(philo, "has taken a fork");
+	pthread_mutex_lock(philo->r_fork);
+	print_message(philo, "has taken a fork");
+	pthread_mutex_lock(&philo->m_eating);
+	print_message(philo, "is eating");
+	philo->last_eat = get_time();
+	philo->limit_eat = philo->last_eat + philo->status->timeToDie;
+	ft_usleep(philo->status, philo->status->timeToEat);
+	pthread_mutex_unlock(&philo->m_eating);
+	pthread_mutex_lock(&philo->status->m_eat_count);
+	philo->nbr_eat++;
+	philo->status->eat_count++;
+	pthread_mutex_unlock(&philo->status->m_eat_count);
 }
