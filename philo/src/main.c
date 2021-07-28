@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:31 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/28 18:58:01 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/28 19:00:02 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main(int argc, char const *argv[])
 {
 	t_main		status;
 
-	if (argc > 4)
+	if (argc > 4 && argc <= 6)
 	{
 		status.nbr_philo = ft_atoi(argv[1]);
 		status.timeToDie = ft_atoi(argv[2]);
