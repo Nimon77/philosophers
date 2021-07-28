@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:31 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/28 18:04:50 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/28 18:46:13 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	main(int argc, char const *argv[])
 				status.timeToEat, status.timeToSleep, status.nbrEat);
 		if (check_inputs(&status))
 		{
-			printf("Error inputs\n");
+			write(0, "Error inputs\n", ft_strlen("Error inputs\n"));
 			return (1);
 		}
 		status.good = 1;

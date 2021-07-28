@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:04 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/27 09:06:50 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/28 18:47:34 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_atoi(const char *str)
 	i = 0;
 	if (!str)
 		return (res);
-	while (str[i] != '\0')
+	while (str[i] != '\0' && str[i] >= '0' && str[i] <= '9')
 	{
 		res = res * 10 + (str[i] - '0');
 		i++;
