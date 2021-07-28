@@ -6,7 +6,7 @@
 #    By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/29 17:07:11 by nsimon            #+#    #+#              #
-#    Updated: 2021/07/28 20:19:54 by nsimon           ###   ########.fr        #
+#    Updated: 2021/07/28 20:25:03 by nsimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,12 +35,7 @@ OBJ_DEBUG = $(addprefix $(OBJ_PATH_DEBUG), $(OBJ_NAME))
 
 CC = clang $(CFLAGS)
 
-ifeq ($(UNAME_S),Darwin)
-	CFLAGS = -Wall -Wextra -Werror
-endif
-ifeq ($(UNAME_S),Linux)
-	CFLAGS = -lpthread -Wall -Wextra -Werror
-endif
+CFLAGS = -pthread -Wall -Wextra -Werror
 
 TEMP = .temp.a
 
