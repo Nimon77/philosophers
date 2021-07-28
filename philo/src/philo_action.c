@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 02:01:23 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/28 19:40:26 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/28 21:53:26 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,15 @@ void	philo_eat(t_philo *philo)
 	print_message(philo, "is eating");
 	philo->last_eat = get_time();
 	philo->limit_eat = philo->last_eat + philo->status->timeToDie;
-	ft_usleep(philo->status, philo->status->timeToEat);
 	pthread_mutex_unlock(&philo->m_eating);
+	ft_usleep(philo->status, philo->status->timeToEat);
 	pthread_mutex_unlock(philo->r_fork);
 	pthread_mutex_unlock(philo->l_fork);
-	pthread_mutex_lock(&philo->status->m_eat_count);
-	philo->nbr_eat++;
-	philo->status->eat_count++;
-	pthread_mutex_unlock(&philo->status->m_eat_count);
+	if (philo->status->nbrEat != -1)
+	{
+		pthread_mutex_lock(&philo->status->m_eat_count);
+		philo->nbr_eat++;
+		philo->status->eat_count++;
+		pthread_mutex_unlock(&philo->status->m_eat_count);
+	}
 }

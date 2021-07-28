@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 18:01:56 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/28 19:43:19 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/28 21:56:33 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int	monitor_life(t_main *status, int i)
 {
 	if (get_time() > status->philos[i].limit_eat)
 	{
+		pthread_mutex_lock(&status->m_print);
 		pthread_mutex_lock(&status->m_good);
 		status->good = 0;
 		pthread_mutex_unlock(&status->m_good);
-		pthread_mutex_lock(&status->m_print);
 		printf("%lld %d died\n", get_time() - status->time, i + 1);
 		pthread_mutex_unlock(&status->m_print);
 		return (1);

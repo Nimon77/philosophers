@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:31 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/28 19:43:36 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/28 21:43:37 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ void	*philosopher(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (philo->nbr_eat < philo->status->nbrEat
-		|| philo->status->nbrEat == -1)
+	while (1)
 	{
+		if (philo->status->nbrEat != -1
+			&& philo->nbr_eat == philo->status->nbrEat)
+			return (NULL);
 		if (!philo->status->good)
 			return (NULL);
 		philo_eat(philo);
@@ -31,7 +33,6 @@ void	*philosopher(void *arg)
 			return (NULL);
 		print_message(philo, "is thinking");
 	}
-	return (NULL);
 }
 
 int	create_philo(t_main *status)
