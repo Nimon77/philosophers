@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:31 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/28 21:43:37 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/29 02:24:42 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	create_philo(t_main *status)
 	i = -1;
 	while (++i < status->nbr_philo)
 		pthread_detach(status->philos[i].thread);
+	free(status->philos);
+	free(status->forks);
 	return (0);
 }
 
