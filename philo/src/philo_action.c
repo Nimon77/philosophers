@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 02:01:23 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/28 21:53:26 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/29 02:33:29 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	print_message(t_philo *philo, char *str)
 void	find_forks(t_main *status, int id)
 {
 	status->philos[id].l_fork = &status->forks[id];
-	if (id + 1 > status->nbr_philo)
+	if (id + 1 >= status->nbr_philo)
 		status->philos[id].r_fork = &status->forks[0];
 	else
 		status->philos[id].r_fork = &status->forks[id + 1];
