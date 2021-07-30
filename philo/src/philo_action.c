@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 02:01:23 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/29 02:33:29 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/07/30 09:18:17 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_message(t_philo *philo, char *str)
 {
 	pthread_mutex_lock(&philo->status->m_print);
-	if (philo->status->good)
+	if (philo->status->good == 1)
 	{
 		printf("%lld %d %s\n", get_time() - philo->status->time,
 			philo->id + 1, str);
