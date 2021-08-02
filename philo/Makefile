@@ -6,7 +6,7 @@
 #    By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/29 17:07:11 by nsimon            #+#    #+#              #
-#    Updated: 2021/08/03 01:28:40 by nsimon           ###   ########.fr        #
+#    Updated: 2021/08/03 01:56:28 by nsimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,4 +84,4 @@ norme:
 	norminette $(SRC)
 	norminette $(INC_PATH)*.h
 
-.PHONY: all, clean, fclean, re
+.PHONY: all, clean, fclean, re, debug
