@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:31 by nsimon            #+#    #+#             */
-/*   Updated: 2021/08/03 01:15:57 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/08/03 01:23:43 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,16 @@ void	*philosopher(void *arg)
 			return (NULL);
 		pthread_mutex_unlock(&philo->status->m_good);
 		philo_eat(philo);
+		pthread_mutex_lock(&philo->status->m_good);
 		if (!philo->status->good)
 			return (NULL);
+		pthread_mutex_unlock(&philo->status->m_good);
 		print_message(philo, "is sleeping");
 		ft_usleep(philo->status, philo->status->timeToSleep);
+		pthread_mutex_lock(&philo->status->m_good);
 		if (!philo->status->good)
 			return (NULL);
+		pthread_mutex_unlock(&philo->status->m_good);
 		print_message(philo, "is thinking");
 	}
 }
@@ -43,7 +47,7 @@ void	ft_clear(t_main *status)
 
 	i = -1;
 	while (++i < status->nbr_philo)
-		pthread_detach(status->philos[i].thread);
+		pthread_join(status->philos[i].thread, NULL);
 	free(status->philos);
 	while (++i < status->nbr_philo)
 		pthread_mutex_destroy(&status->forks[i]);
