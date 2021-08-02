@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:31 by nsimon            #+#    #+#             */
-/*   Updated: 2021/08/03 00:52:35 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/08/03 01:15:57 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,19 @@ void	*philosopher(void *arg)
 	}
 }
 
+void	ft_clear(t_main *status)
+{
+	int	i;
+
+	i = -1;
+	while (++i < status->nbr_philo)
+		pthread_detach(status->philos[i].thread);
+	free(status->philos);
+	while (++i < status->nbr_philo)
+		pthread_mutex_destroy(&status->forks[i]);
+	free(status->forks);
+}
+
 int	create_philo(t_main *status)
 {
 	int	i;
@@ -56,11 +69,7 @@ int	create_philo(t_main *status)
 	start_half(status, 1);
 	pthread_create(&status->monitor, NULL, monitor, status);
 	pthread_join(status->monitor, NULL);
-	i = -1;
-	while (++i < status->nbr_philo)
-		pthread_detach(status->philos[i].thread);
-	free(status->philos);
-	free(status->forks);
+	ft_clear(status);
 	return (0);
 }
 
