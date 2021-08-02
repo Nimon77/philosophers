@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 18:01:56 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/30 09:17:11 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/08/03 01:03:36 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	monitor_eat(t_main *status)
 		pthread_mutex_lock(&status->m_good);
 		status->good = 0;
 		pthread_mutex_unlock(&status->m_good);
+		pthread_mutex_unlock(&status->m_eat_count);
 		return (1);
 	}
 	pthread_mutex_unlock(&status->m_eat_count);
@@ -55,7 +56,10 @@ void	*monitor(void *arg)
 		{
 			pthread_mutex_lock(&status->philos[i].m_eating);
 			if (monitor_life(status, i) || monitor_eat(status))
+			{
+				pthread_mutex_unlock(&status->philos[i].m_eating);
 				return (NULL);
+			}
 			pthread_mutex_unlock(&status->philos[i].m_eating);
 		}
 		usleep(100);

@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 02:01:23 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/30 09:18:17 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/08/03 01:02:09 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	philo_eat(t_philo *philo)
 	if (philo->status->nbrEat != -1)
 	{
 		pthread_mutex_lock(&philo->status->m_eat_count);
-		philo->nbr_eat++;
-		philo->status->eat_count++;
+		philo->nbr_eat += 1;
+		philo->status->eat_count += 1;
 		pthread_mutex_unlock(&philo->status->m_eat_count);
 	}
 }

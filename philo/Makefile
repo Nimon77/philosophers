@@ -6,7 +6,7 @@
 #    By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/29 17:07:11 by nsimon            #+#    #+#              #
-#    Updated: 2021/07/28 20:25:03 by nsimon           ###   ########.fr        #
+#    Updated: 2021/08/03 00:45:56 by nsimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,12 +52,12 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 
 debug: $(OBJ_DEBUG)
 	@echo "\033[34mCreation of $(NAME) ...\033[0m"
-	@$(CC) $(OBJ_DEBUG) -o$(NAME) -g
+	@$(CC) $(OBJ_DEBUG) -fsanitize=thread -o$(NAME) -g
 	@echo "\033[32m$(NAME) created\n\033[0m"
 
 $(OBJ_PATH_DEBUG)%.o: $(SRC_PATH)%.c
 	@mkdir $(OBJ_PATH_DEBUG) 2> /dev/null || true
-	@$(CC) -DDEBUG=1 -I$(INC_PATH) -o $@ -c $<
+	@$(CC) -DDEBUG=1 -fsanitize=thread -g -I$(INC_PATH) -o $@ -c $<
 
 clean:
 	@echo "\033[33mRemoval of .o files of $(NAME) ...\033[0m"

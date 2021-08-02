@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:04 by nsimon            #+#    #+#             */
-/*   Updated: 2021/07/28 21:47:26 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/08/03 00:58:15 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,15 @@ void	ft_usleep(t_main *status, int stop_ms)
 	long long	end_ms;
 
 	end_ms = get_time() + stop_ms;
-	while (get_time() < end_ms && status->good == 1)
+	while (get_time() < end_ms)
+	{
+		pthread_mutex_lock(&status->m_good);
+		if (status->good != 1)
+		{
+			pthread_mutex_unlock(&status->m_good);
+			return ;
+		}
+		pthread_mutex_unlock(&status->m_good);
 		usleep(100);
+	}
 }
