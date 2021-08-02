@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:31 by nsimon            #+#    #+#             */
-/*   Updated: 2021/08/03 01:23:43 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/08/03 01:33:36 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,15 @@ void	*philosopher(void *arg)
 		if (philo->status->nbrEat != -1
 			&& philo->nbr_eat == philo->status->nbrEat)
 			return (NULL);
-		pthread_mutex_lock(&philo->status->m_good);
-		if (!philo->status->good)
+		if (check_good(philo->status))
 			return (NULL);
-		pthread_mutex_unlock(&philo->status->m_good);
 		philo_eat(philo);
-		pthread_mutex_lock(&philo->status->m_good);
-		if (!philo->status->good)
+		if (check_good(philo->status))
 			return (NULL);
-		pthread_mutex_unlock(&philo->status->m_good);
 		print_message(philo, "is sleeping");
 		ft_usleep(philo->status, philo->status->timeToSleep);
-		pthread_mutex_lock(&philo->status->m_good);
-		if (!philo->status->good)
+		if (check_good(philo->status))
 			return (NULL);
-		pthread_mutex_unlock(&philo->status->m_good);
 		print_message(philo, "is thinking");
 	}
 }

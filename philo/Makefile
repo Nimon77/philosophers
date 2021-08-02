@@ -6,7 +6,7 @@
 #    By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/29 17:07:11 by nsimon            #+#    #+#              #
-#    Updated: 2021/08/03 00:45:56 by nsimon           ###   ########.fr        #
+#    Updated: 2021/08/03 01:28:40 by nsimon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC_PATH = ./src/
 
 SRC_NAME =	main.c \
 			utils.c \
+			utils2.c \
 			philo_action.c \
 			monitor.c
 
