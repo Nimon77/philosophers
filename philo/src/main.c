@@ -6,7 +6,7 @@
 /*   By: nsimon <nsimon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 10:21:31 by nsimon            #+#    #+#             */
-/*   Updated: 2021/08/03 01:33:36 by nsimon           ###   ########.fr       */
+/*   Updated: 2021/08/03 11:41:36 by nsimon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_clear(t_main *status)
 
 	i = -1;
 	while (++i < status->nbr_philo)
-		pthread_join(status->philos[i].thread, NULL);
+		pthread_detach(status->philos[i].thread);
 	free(status->philos);
 	while (++i < status->nbr_philo)
 		pthread_mutex_destroy(&status->forks[i]);
